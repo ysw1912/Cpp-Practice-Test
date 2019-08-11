@@ -1,9 +1,8 @@
+#include <assert.h>
 #include <iostream>     // std::cout
 #include <future>       // std::packaged_task, std::future
 #include <chrono>       // std::chrono::seconds
 #include <thread>       // std::thread, std::this_thread::sleep_for
-
-#include <assert.h>
 
 int CountDown(int from, int to) {
   std::cout << "Counting...\n";

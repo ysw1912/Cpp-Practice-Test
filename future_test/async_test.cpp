@@ -1,16 +1,9 @@
+#include "utils.h"
+
+#include <assert.h>
 #include <iostream>             // std::cout
 #include <future>               // std::async, std::future
 #include <chrono>               // std::chrono::milliseconds
-
-#include <assert.h>
-
-// a non-optimized way of checking for prime numbers:
-bool IsPrime(int x) {
-  for (int i = 2; i < x; ++i)
-    if (x % i == 0)
-      return false;
-  return true;
-}
 
 int main()
 {
