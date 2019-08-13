@@ -1,7 +1,7 @@
 #ifndef CPP_ADDR_H_
 #define CPP_ADDR_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 #include <gflags/gflags.h>
 

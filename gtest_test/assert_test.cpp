@@ -1,6 +1,5 @@
 #include "utils.h"
 
-#include <iostream>
 #include <string>
 #include <vector>
 
@@ -10,7 +9,7 @@ TEST(GTest, AssertTest) {
   ASSERT_TRUE(IsPrime(73));
 
   std::vector<int> x{1, 2, 3}, y{1, 2, 3};
-  for (int i = 0; i < x.size(); i++) {
+  for (size_t i = 0; i < x.size(); i++) {
     EXPECT_EQ(x[i], y[i]) << "Vectors x and y differ at index " << i;
   }
 

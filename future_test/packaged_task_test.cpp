@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <cassert>
 #include <iostream>     // std::cout
 #include <future>       // std::packaged_task, std::future
 #include <chrono>       // std::chrono::seconds

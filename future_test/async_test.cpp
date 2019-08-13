@@ -1,6 +1,6 @@
 #include "utils.h"
 
-#include <assert.h>
+#include <cassert>
 #include <iostream>             // std::cout
 #include <future>               // std::async, std::future
 #include <chrono>               // std::chrono::milliseconds

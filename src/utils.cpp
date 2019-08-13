@@ -1,5 +1,3 @@
-#include "utils.h"
-
 // Returns true iff n is a prime number.
 bool IsPrime(int n) {
   if (n <= 1) return false;
