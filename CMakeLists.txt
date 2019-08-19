@@ -9,7 +9,7 @@ add_library(utils
     src/utils.cpp
 )
 
-set(SUBDIRS future_test gflags_test gtest_test mutex_test)
+set(SUBDIRS future_test gflags_test gtest_test mutex_test strings_test)
 FOREACH(subdir ${SUBDIRS})
   ADD_SUBDIRECTORY(${subdir})
 ENDFOREACH()
