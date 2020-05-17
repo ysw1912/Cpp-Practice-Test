@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(include)
 add_library(utils
-    src/utils.cpp
+  src/utils.cpp
 )
 
 # Set up boost library.
@@ -14,7 +14,7 @@ set(BOOST_ROOT D:/workspace/boost)
 set(BOOST_INCLUDEDIR D:/workspace/boost/include)
 set(BOOST_LIBRARYDIR D:/workspace/boost/lib)
 set(BOOST_MIN_VERSION 1.72.0)
-set(Boost_NO_BOOST_CMAKE ON)
+# set(Boost_NO_BOOST_CMAKE ON)
 find_package(Boost ${BOOST_MIN_VERSION} REQUIRED)
 if(Boost_FOUND)
   message(STATUS "Setting up BOOST")
@@ -27,13 +27,15 @@ else()
 endif(Boost_FOUND)
 
 set(SUBDIRS
-    boost_test
-    future_test
-    gflags_test
-    gtest_test
-    mutex_test
-    strings_test
-    unit_test
+  boost_test
+  future_test
+  gflags_test
+  gtest_test
+  mutex_test
+  python_test
+  strings_test
+  template_test
+  unit_test
 )
 FOREACH(subdir ${SUBDIRS})
   ADD_SUBDIRECTORY(${subdir})
