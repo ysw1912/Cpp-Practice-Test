@@ -29,20 +29,40 @@ struct can_output<T, std::void_t<decltype(std::declval<std::ostream&>() << std::
 template <typename T>
 constexpr bool can_output_v = can_output<T>::value;
 
-template <typename T1, typename T2>
-std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& pair);
-
 template <typename Container, typename = std::enable_if_t<!can_output_v<Container>>>
 auto operator<<(std::ostream& os, const Container& container)
     -> decltype(container.begin(), container.end(), os) {
-  os << '[';
+  using element_type = std::decay_t<decltype(*container.begin())>;
+  std::pair<char, char> brackets = GetBrackets(has_key_type<Container>());
+  os << brackets.first;
   for (auto it = container.begin(); it != container.end(); ++it) {
     if (it != container.begin()) {
       os << ", ";
     }
-    os << *it;
+    OutputElement(os, *it, container, is_pair<element_type>());
   }
-  os << ']';
+  os << brackets.second;
+  return os;
+}
+
+std::pair<char, char> GetBrackets(std::true_type) {
+  return std::make_pair('{', '}');
+}
+
+std::pair<char, char> GetBrackets(std::false_type) {
+  return std::make_pair('[', ']');
+}
+
+template <typename Elem, typename Container>
+auto OutputElement(std::ostream& os, const Elem& element, const Container&, std::true_type)
+-> decltype(std::declval<typename Container::key_type>(), os) {
+  os << element.first << ": " << element.second;
+  return os;
+}
+
+template <typename Elem, typename Container>
+std::ostream& OutputElement(std::ostream& os, const Elem& element, const Container&, ...) {
+  os << element;
   return os;
 }
 
@@ -52,5 +72,4 @@ std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& pair) {
   return os;
 }
 
-
-#endif //CPP_OUTPUT_H
+#endif // CPP_OUTPUT_H

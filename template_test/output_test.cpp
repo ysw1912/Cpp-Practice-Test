@@ -23,8 +23,15 @@ int main() {
 
   std::cout << "=================================================" << std::endl;
   std::pair<std::string, int> p1{"a", 1}, p2{"b", 2}, p3{"c", 3};
-  std::vector<std::pair<std::string, int>> vec{p1, p2, p3};
+  std::vector<std::pair<std::string, int>> vec1{p1, p2, p3}, vec2{p3, p2, p1};
+
+  std::vector<std::vector<std::pair<std::string, int>>> vec{vec1, vec2};
   std::cout << vec << std::endl;
+
+  std::map<std::string, std::vector<std::pair<std::string, int>>> map;
+  map["key1"] = vec1;
+  map["key2"] = vec2;
+  std::cout << map << std::endl;
 
   return 0;
 }
