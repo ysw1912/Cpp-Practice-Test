@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 # Find includes in corresponding build directories.
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 include_directories(include)
 add_library(utils
@@ -28,9 +28,11 @@ endif(Boost_FOUND)
 
 set(SUBDIRS
   boost_test
+  coroutine
   future_test
   gflags_test
   gtest_test
+  lib
   mutex_test
   python_test
   strings_test

@@ -7,6 +7,9 @@
 
 int main()
 {
+  std::async([]{ std::this_thread::sleep_for(std::chrono::seconds(5)); std::cout << "1\n"; });
+  std::async([]{ std::this_thread::sleep_for(std::chrono::seconds(5)); std::cout << "2\n"; });
+  return 0;
   int num = 444444443;
   // 异步调用函数.
   std::future<bool> future = std::async(std::launch::async, IsPrime, num);
