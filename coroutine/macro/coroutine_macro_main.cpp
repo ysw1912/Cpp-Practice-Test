@@ -27,9 +27,9 @@ class HttpRequestParser : public Coroutine {
   // 解析成功返回true, 格式有误返回false.
   bool Parse(const std::string& request);
 
-  [[nodiscard]] std::string AsString() const {
-    return "Method: " + method_ + "\nUri: " + uri_ + "\nVersion: " + version_;
-  }
+  [[nodiscard]] const std::string& method() const { return method_; }
+  [[nodiscard]] const std::string& uri() const { return uri_; }
+  [[nodiscard]] const std::string& version() const { return version_; }
 
  private:
   bool Consume(char c);
@@ -54,9 +54,15 @@ int main() {
 
   {
     HttpRequestParser parser;
-    if (parser.Parse("GET /foo/bar HTTP/2.0")) {
-      std::cout << parser.AsString() << std::endl;
-    }
+    assert(parser.Parse("GET /foo/bar HTTP/2.0"));
+    assert(parser.method() == "GET");
+    assert(parser.uri() == "/foo/bar");
+    assert(parser.version() == "2.0");
+
+    assert(!HttpRequestParser().Parse("/foo/bar HTTP/2.0"));
+    assert(!HttpRequestParser().Parse("POST/foo/bar HTTP/2.0"));
+    assert(!HttpRequestParser().Parse("Fuck /foo/bar HTTP/2.0"));
+    assert(!HttpRequestParser().Parse("POST /foo/bar version/1.1"));
   }
   return 0;
 }
@@ -107,6 +113,11 @@ bool HttpRequestParser::Parse(const std::string& request) {
     if (!Consume(c)) {
       return false;
     }
+  }
+  static std::unordered_set<std::string> methods = {"GET", "POST", "DELETE", "PUT", "OPTION"};
+  if (!methods.count(method_)) {
+    std::cerr << "Parse error: invalid method: " << method_ << std::endl;
+    return false;
   }
   if (version_.size() < 5 || strncmp(version_.c_str(), "HTTP/", 5) != 0) {
     std::cerr << "Parse error: must be \"HTTP/\" before version" << std::endl;
